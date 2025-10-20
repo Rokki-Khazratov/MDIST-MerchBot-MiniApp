@@ -36,3 +36,26 @@ export interface APIProduct {
   updated_at: string;
 }
 
+export interface CreateOrderRequest {
+  items: Array<{
+    product_id: number;
+    quantity: number;
+  }>;
+  customer_name: string;
+  customer_phone: string;
+  payment_method: 'card' | 'cash';
+  promo_code?: string | null;
+}
+
+export interface APIOrder {
+  id: number;
+  customer_name: string;
+  customer_phone: string;
+  payment_method: 'card' | 'cash';
+  promo_code?: string | null;
+  total_amount: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
