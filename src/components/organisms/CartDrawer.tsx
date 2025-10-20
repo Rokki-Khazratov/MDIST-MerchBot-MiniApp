@@ -9,7 +9,11 @@ export function CartDrawer() {
   const cartDrawerOpen = useUIStore((state) => state.cartDrawerOpen);
   const closeCartDrawer = useUIStore((state) => state.closeCartDrawer);
 
-  const { items, updateQty, remove, subtotal, hasItems } = useCartStore();
+  const items = useCartStore((s) => s.items);
+  const updateQty = useCartStore((s) => s.updateQty ?? ((id:number, q:number)=>{}));
+  const remove = useCartStore((s) => s.remove ?? ((id:number)=>{}));
+  const subtotal = useCartStore((s) => s.subtotal ?? (()=>0));
+  const hasItems = () => items.length > 0;
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -86,7 +90,7 @@ export function CartDrawer() {
             <div style={styles.itemsList}>
               {items.map((item) => (
                 <CartLineItem
-                  key={item.product.id}
+                  key={(item.product?.id ?? item.productId).toString()}
                   item={item}
                   onQtyChange={updateQty}
                   onRemove={remove}

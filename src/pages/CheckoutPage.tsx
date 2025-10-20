@@ -122,6 +122,7 @@ export const CheckoutPage: React.FC = () => {
             icon="arrow-left"
             onClick={() => navigate(-1)}
             className="mr-3"
+            aria-label="Назад"
           />
           <h1 style={{ color: '#000000', fontSize: '24px', fontWeight: '600' }}>
             Оформление заказа
@@ -234,7 +235,6 @@ export const CheckoutPage: React.FC = () => {
           <Button
             type="submit"
             variant="primary"
-            size="large"
             disabled={isSubmitting}
             style={{ width: '100%' }}
           >

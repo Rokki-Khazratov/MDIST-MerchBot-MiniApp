@@ -12,7 +12,10 @@ export function CartLineItem({
   onQtyChange,
   onRemove,
 }: CartLineItemProps) {
-  const lineTotal = item.product.priceEffective * item.qty;
+  // Guard for legacy optional fields
+  if (!item.product) return null;
+  const qty = item.qty ?? item.quantity ?? 0;
+  const lineTotal = item.product.priceEffective * qty;
 
   return (
     <div style={styles.container}>
@@ -38,16 +41,16 @@ export function CartLineItem({
         <div style={styles.controls}>
           <div style={styles.stepper}>
             <button
-              onClick={() => onQtyChange(item.product.id, item.qty - 1)}
+              onClick={() => onQtyChange(item.product.id, qty - 1)}
               style={styles.stepperButton}
             >
               −
             </button>
             <span style={styles.qty}>
-              {item.qty}
+              {qty}
             </span>
             <button
-              onClick={() => onQtyChange(item.product.id, item.qty + 1)}
+              onClick={() => onQtyChange(item.product.id, qty + 1)}
               style={styles.stepperButton}
             >
               +

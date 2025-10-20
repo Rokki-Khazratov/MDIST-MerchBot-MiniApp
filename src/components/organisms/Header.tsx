@@ -5,7 +5,7 @@ import { useCartStore } from '../../store/cartStore';
 import { useUIStore } from '../../store/uiStore';
 
 export function Header() {
-  const itemsCount = useCartStore((state) => state.itemsCount());
+  const itemsCount = useCartStore((state) => state.itemsCount?.() ?? 0);
   const { filters, setFilter, openCartDrawer } = useUIStore();
 
   return (

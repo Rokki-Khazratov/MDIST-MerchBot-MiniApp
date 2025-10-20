@@ -41,8 +41,8 @@ export function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    add(product, qty);
-    openCartDrawer();
+    add?.(product, qty);
+    openCartDrawer?.();
   };
 
   if (loading || !product) {
