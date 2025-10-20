@@ -33,9 +33,14 @@ export interface UIProduct {
   isOnSale: boolean;
 }
 
+// Backward-compatible cart item shape
+// New shape uses productId/quantity, but some components still expect product/qty
 export interface UICartItem {
   productId: number;
   quantity: number;
+  // Legacy optional fields for backward compatibility
+  product?: UIProduct;
+  qty?: number;
 }
 
 export interface UIFilters {
