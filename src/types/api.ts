@@ -25,13 +25,13 @@ export interface APIProduct {
   slug: string;
   description: string;
   price: string;
-  discount_price: string | null;
+  discount_price?: string;
   price_effective: string;
   quantity: number;
   category: APICategory;
-  images: APIProductImage[];
+  thumbnail?: string;
+  images?: string[];
   is_active: boolean;
-  is_new: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -55,6 +55,19 @@ export interface APIOrder {
   promo_code?: string | null;
   total_amount: string;
   status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface APIPromoCode {
+  id: number;
+  code: string;
+  discount_type: 'percentage' | 'fixed';
+  discount_value: number;
+  minimum_cart_total?: number;
+  valid_from: string;
+  valid_to: string;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
 }

@@ -1,57 +1,58 @@
-import type { APIProduct, APIProductImage, APICategory } from '../types/api';
-import type { UIProduct, UIProductImage, UICategory } from '../types/ui';
-import { parsePrice } from './currency';
+import type { APIProduct, APICategory, APIPromoCode } from '../types/api';
+import type { UIProduct, UICategory, UIPromoCode } from '../types/ui';
 
 export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength).trim() + '...';
 }
 
-function extractThumbnail(images: APIProductImage[]): string {
-  const primary = images.find((img) => img.is_primary);
-  if (primary) return primary.image.file;
-  if (images.length > 0) return images[0].image.file;
-  return '/placeholder.png';
-}
+const isNewProduct = (createdAt: string): boolean => {
+  const productDate = new Date(createdAt);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - productDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays <= 30; // Considered new if created within 30 days
+};
 
-function normalizeImages(apiImages: APIProductImage[]): UIProductImage[] {
-  return apiImages
-    .sort((a, b) => a.sort_order - b.sort_order)
-    .map((img) => ({
-      url: img.image.file,
-      alt: img.image.alt_text || '',
-      isPrimary: img.is_primary,
-      order: img.sort_order,
-    }));
-}
+export const mapCategory = (api: APICategory): UICategory => ({
+  id: api.id,
+  name: api.name,
+  slug: api.slug,
+  description: '', // API does not provide description for category
+  isActive: api.is_active,
+});
 
-function mapCategory(apiCategory: APICategory): UICategory {
+export const mapProduct = (api: APIProduct, categories?: UICategory[]): UIProduct => {
+  // Use category from API response or find in provided categories
+  const category = api.category || categories?.find(c => c.id === api.category?.id);
+  
   return {
-    id: apiCategory.id,
-    name: apiCategory.name,
-    slug: apiCategory.slug,
-    isActive: apiCategory.is_active,
-    sortOrder: apiCategory.sort_order,
+    id: api.id,
+    name: api.name,
+    slug: api.slug,
+    description: api.description,
+    price: parseFloat(api.price), // Converted from string to number
+    discountPrice: api.discount_price ? parseFloat(api.discount_price) : undefined, // Converted from string to number
+    priceEffective: parseFloat(api.price_effective), // Converted from string to number
+    categoryId: api.category?.id || 0,
+    categoryName: api.category?.name || category?.name || 'Unknown',
+    quantity: api.quantity,
+    isActive: api.is_active,
+    thumbnailUrl: api.thumbnail,
+    images: api.images || [],
+    isNew: isNewProduct(api.created_at),
+    isOnSale: !!api.discount_price && parseFloat(api.discount_price) < parseFloat(api.price), // Used parseFloat
   };
-}
+};
 
-export function mapAPIProductToUI(apiProduct: APIProduct): UIProduct {
-  return {
-    id: apiProduct.id,
-    name: apiProduct.name,
-    slug: apiProduct.slug,
-    description: apiProduct.description,
-    shortDescription: truncateText(apiProduct.description, 100),
-    price: parsePrice(apiProduct.price),
-    discountPrice: apiProduct.discount_price ? parsePrice(apiProduct.discount_price) : null,
-    priceEffective: parsePrice(apiProduct.price_effective),
-    quantity: apiProduct.quantity,
-    isActive: apiProduct.is_active,
-    isNew: apiProduct.is_new,
-    thumbnailUrl: extractThumbnail(apiProduct.images),
-    images: normalizeImages(apiProduct.images),
-    category: mapCategory(apiProduct.category),
-    createdAt: apiProduct.created_at,
-  };
-}
+export const mapPromoCode = (api: APIPromoCode): UIPromoCode => ({
+  id: api.id,
+  code: api.code,
+  discountType: api.discount_type,
+  discountValue: api.discount_value,
+  minimumCartTotal: api.minimum_cart_total,
+  validFrom: new Date(api.valid_from),
+  validTo: new Date(api.valid_to),
+  isActive: api.is_active,
+});
 

@@ -4,8 +4,8 @@ export interface UICategory {
   id: number;
   name: string;
   slug: string;
+  description: string;
   isActive: boolean;
-  sortOrder: number;
 }
 
 export interface UIProductImage {
@@ -20,22 +20,22 @@ export interface UIProduct {
   name: string;
   slug: string;
   description: string;
-  shortDescription: string;
   price: number;
-  discountPrice: number | null;
+  discountPrice?: number;
   priceEffective: number;
+  categoryId: number;
+  categoryName: string;
   quantity: number;
   isActive: boolean;
+  thumbnailUrl?: string;
+  images: string[];
   isNew: boolean;
-  thumbnailUrl: string;
-  images: UIProductImage[];
-  category: UICategory;
-  createdAt: string;
+  isOnSale: boolean;
 }
 
 export interface UICartItem {
-  product: UIProduct;
-  qty: number;
+  productId: number;
+  quantity: number;
 }
 
 export interface UIFilters {
@@ -45,5 +45,16 @@ export interface UIFilters {
   onSale: boolean;
   isNew: boolean;
   ordering: 'price' | '-price' | 'created_at' | '-created_at';
+}
+
+export interface UIPromoCode {
+  id: number;
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  minimumCartTotal?: number;
+  validFrom: Date;
+  validTo: Date;
+  isActive: boolean;
 }
 

@@ -1,6 +1,6 @@
 import { APIOrder, CreateOrderRequest } from '../types/api';
 
-const API_BASE_URL = 'http://127.0.0.1:8000';
+const API_BASE_URL = 'http://195.158.9.83:8000';
 
 export const createOrder = async (orderData: CreateOrderRequest): Promise<APIOrder> => {
   try {
