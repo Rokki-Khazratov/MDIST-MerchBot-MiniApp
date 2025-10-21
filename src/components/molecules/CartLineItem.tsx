@@ -41,7 +41,7 @@ export function CartLineItem({
         <div style={styles.controls}>
           <div style={styles.stepper}>
             <button
-              onClick={() => onQtyChange(item.product.id, qty - 1)}
+              onClick={() => item.product && onQtyChange(item.product.id, qty - 1)}
               style={styles.stepperButton}
             >
               −
@@ -50,7 +50,7 @@ export function CartLineItem({
               {qty}
             </span>
             <button
-              onClick={() => onQtyChange(item.product.id, qty + 1)}
+              onClick={() => item.product && onQtyChange(item.product.id, qty + 1)}
               style={styles.stepperButton}
             >
               +
@@ -60,7 +60,7 @@ export function CartLineItem({
           <div style={styles.priceRow}>
             <Price value={lineTotal} size="md" />
             <button
-              onClick={() => onRemove(item.product.id)}
+              onClick={() => item.product && onRemove(item.product.id)}
               style={styles.removeButton}
             >
               <svg style={{ width: 20, height: 20 }} fill="none" viewBox="0 0 24 24" stroke="currentColor">

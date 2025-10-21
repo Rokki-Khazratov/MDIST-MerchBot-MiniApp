@@ -10,8 +10,8 @@ export function CartDrawer() {
   const closeCartDrawer = useUIStore((state) => state.closeCartDrawer);
 
   const items = useCartStore((s) => s.items);
-  const updateQty = useCartStore((s) => s.updateQty ?? ((id:number, q:number)=>{}));
-  const remove = useCartStore((s) => s.remove ?? ((id:number)=>{}));
+  const updateQty = useCartStore((s) => s.updateQty ?? ((_id:number, _q:number)=>{}));
+  const remove = useCartStore((s) => s.remove ?? ((_id:number)=>{}));
   const subtotal = useCartStore((s) => s.subtotal ?? (()=>0));
   const hasItems = () => items.length > 0;
 

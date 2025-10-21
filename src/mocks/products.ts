@@ -13,6 +13,7 @@ export const MOCK_PRODUCTS: UIProduct[] = [
     quantity: 50,
     isActive: true,
     isNew: true,
+    isOnSale: false,
     thumbnailUrl: 'https://via.placeholder.com/400x400/1A1A1A/FFFFFF?text=MDIST+Tshirt',
     images: [
       'https://via.placeholder.com/800x800/1A1A1A/FFFFFF?text=MDIST+Tshirt',
@@ -31,6 +32,7 @@ export const MOCK_PRODUCTS: UIProduct[] = [
     quantity: 30,
     isActive: true,
     isNew: false,
+    isOnSale: true,
     thumbnailUrl: 'https://via.placeholder.com/400x400/2A2A2A/FFFFFF?text=MDIST+Hoodie',
     images: [
       'https://via.placeholder.com/800x800/2A2A2A/FFFFFF?text=MDIST+Hoodie',
@@ -49,6 +51,7 @@ export const MOCK_PRODUCTS: UIProduct[] = [
     quantity: 100,
     isActive: true,
     isNew: true,
+    isOnSale: false,
     thumbnailUrl: 'https://via.placeholder.com/400x400/0A0A0A/FFFFFF?text=MDIST+Cap',
     images: [
       'https://via.placeholder.com/800x800/0A0A0A/FFFFFF?text=MDIST+Cap',
@@ -67,6 +70,7 @@ export const MOCK_PRODUCTS: UIProduct[] = [
     quantity: 20,
     isActive: true,
     isNew: false,
+    isOnSale: true,
     thumbnailUrl: 'https://via.placeholder.com/400x400/1A1A1A/FFFFFF?text=MDIST+Backpack',
     images: [
       'https://via.placeholder.com/800x800/1A1A1A/FFFFFF?text=MDIST+Backpack',
