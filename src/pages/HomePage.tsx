@@ -9,6 +9,7 @@ import { FilterBar } from '../components/molecules/FilterBar';
 import { CatalogGrid } from '../components/organisms/CatalogGrid';
 
 export function HomePage() {
+  // Force deploy update - ensure latest version is deployed
   const { filters, setFilter, resetFilters } = useUIStore();
   const [products, setProducts] = useState<UIProduct[]>([]);
   const [categories, setCategories] = useState<UICategory[]>([]);
